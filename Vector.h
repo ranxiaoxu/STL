@@ -8,6 +8,7 @@ class Vector{
 public:
 	typedef T ValueType;
 	typedef ValueType* Iterator;
+	typedef const ValueType* ConstIterator;
 
 	Vector()
 		:_start(NULL)
@@ -77,6 +78,15 @@ public:
 		return _finish;
 	}
 
+	ConstIterator Begin() const
+	{
+		return _start;
+	}
+	
+	ConstIterator End() const
+	{
+		return _finish;
+	}
 	int Size()
 	{
 		return _finish - _start;
@@ -127,7 +137,16 @@ void testVector()
 	v.PushBack(2);
 	v.PushBack(3);
 	v.PushBack(4);
-	Vector<int>::Iterator it = v.Begin();
+
+	Vector<int>::ConstIterator it = v.Begin();
+	while(it != v.End())
+	{
+		//*it = 10;
+		cout<<*it<<" ";
+		it++;
+	}
+	cout<<endl;
+	//Vector<int>::Iterator it = v.Begin();
 	/*while(it != v.End())
 	{	
 		cout<<*it<<" ";
@@ -146,7 +165,7 @@ void testVector()
 	}
 	cout<<endl;*/
 
-	v.Insert(v.Begin()+2,6);
+	/*v.Insert(v.Begin()+2,6);
 
 	it = v.Begin();
 	while(it != v.End())
@@ -164,5 +183,5 @@ void testVector()
 		cout<<*it<<" ";
 		it++;
 	}
-	cout<<endl;
+	cout<<endl;*/
 }

@@ -21,12 +21,16 @@ struct _ListNode{
 	{}
 };
 
-template<class T>
+template<class T,class Ref,class Ptr>
 struct _ListIterator
 {
 	typedef _ListNode<T> Node;
 	typedef Node* LinkType;
-	typedef _ListIterator Self;
+	typedef _ListIterator<T,Ref,Ptr> Self;
+	
+	typedef T ValueType;
+	typedef Ref Reference;
+	typedef Ptr Pointer;
 	
 	LinkType _node;
 	
@@ -63,12 +67,12 @@ struct _ListIterator
 		return Self(tmp);
 	}
 
-	T & operator *()
+	Reference operator *()
 	{
 		return _node->_data;
 	}
 
-	T *operator ->()
+	Pointer operator ->()
 	{
 		return &(_node->_data);
 	}
@@ -90,7 +94,8 @@ class _List
 	typedef Node* LinkType;
 	
 public:
-	typedef _ListIterator<T> Iterator;
+	typedef _ListIterator<T,T*,T&> Iterator;
+	typedef _ListIterator<T,const T&,const T*> ConstIterator;
 
 	_List()
 		:_head(new Node())
@@ -109,6 +114,15 @@ public:
 		return Iterator(_head);
 	}
 
+	ConstIterator Begin() const
+	{
+		return ConstIterator(_head->_next);	
+	}
+
+	ConstIterator End() const
+	{
+		return ConstIterator(_head);
+	}
 	Iterator Insert(Iterator pos,const T&x)   //‘⁄POS«∞≤Â»Îx
 	{
 		LinkType cur = pos._node;
@@ -164,7 +178,18 @@ private:
 	LinkType _head;
 };
 
+void PrintList(const _List<int> &l)
+{
+	_List<int>::ConstIterator it = l.Begin();
+	while(it != l.End())
+	{
+		//*it = 10;
+		cout<<*it<<endl;
+		it++;
+	}
+	cout<<endl;
 
+}
 void testList()
 {
 	_List<int> l;
@@ -174,7 +199,7 @@ void testList()
 	l.PushBack(4);
 	l.PushBack(5);
 
-	_List<int>::Iterator it = l.Begin();
+	/*_List<int>::Iterator it = l.Begin();
 	while(it != l.End())
 	{
 		cout<<*it<<" ";
@@ -190,6 +215,7 @@ void testList()
 		cout<<*it<<" ";
 		it++;
 	}
-	cout<<endl;
+	cout<<endl;*/
+	PrintList(l);
 }
 
