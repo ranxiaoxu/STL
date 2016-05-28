@@ -1,4 +1,5 @@
 #pragma once 
+#include"Iterator.h"
 #include<iostream>
 #include<assert.h>
 using namespace std;
@@ -31,6 +32,8 @@ struct _ListIterator
 	typedef T ValueType;
 	typedef Ref Reference;
 	typedef Ptr Pointer;
+	typedef BidirectionalIteratorTag IteratorCategory;
+	typedef ptrdiff_t DifferenceType ;
 	
 	LinkType _node;
 	
@@ -87,6 +90,7 @@ struct _ListIterator
 		return _node != it._node;
 	}
 };
+
 template<class T>
 class _List
 {
