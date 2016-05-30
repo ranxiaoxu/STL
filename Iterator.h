@@ -132,3 +132,81 @@ void test()
 	v.PushBack(5);
 	cout<<Distance(v.Begin(),v.End())<<endl;
 }
+
+//反向迭代器
+template <class Iterator>
+class ReverseIterator 
+{
+protected:
+	Iterator _current;
+public:
+  typedef typename IteratorTraits<Iterator>::IteratorCategory
+		  IteratorCategory;
+  typedef typename IteratorTraits<Iterator>::ValueType
+          ValueType;
+  typedef typename IteratorTraits<Iterator>::DifferenceType
+          DifferenceType;
+  typedef typename IteratorTraits<Iterator>::Pointer
+          Pointer;
+  typedef typename IteratorTraits<Iterator>::Reference
+          Reference;
+
+  typedef ReverseIterator<Iterator> Self;
+
+public:
+  ReverseIterator()
+  {}
+  
+  ReverseIterator(Iterator x) 
+	  :_current(x) 
+  {}
+
+  Reference operator*() const
+  {
+    Iterator tmp = _current;
+    return *--tmp;          //因为_current是左闭右开
+  }
+
+  Pointer operator->() const 
+  { 
+	  return &(operator*()); 
+  }
+
+  Self& operator++() 
+  {
+    --_current;
+    return *this;
+  }
+  
+  Self operator++(int)
+  {
+    Self tmp = *this;
+    --_current;
+    return tmp;
+  }
+
+  Self & operator--() 
+  {
+    ++_current;
+    return *this;
+  }
+
+  Self operator--(int) 
+  {
+    Self tmp = *this;
+    ++_current;
+    return tmp;
+  }
+
+  Reference operator[](DifferenceType n) const 
+  { 
+	  return *(*this + n); 
+  }  
+
+	bool operator != (const ReverseIterator<Iterator>& tmp) 
+	{
+	  return _current._node != tmp._current._node;
+	}
+}; 
+ 
+
