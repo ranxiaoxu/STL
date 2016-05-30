@@ -98,8 +98,9 @@ class _List
 	typedef Node* LinkType;
 	
 public:
-	typedef _ListIterator<T,T*,T&> Iterator;
-	typedef _ListIterator<T,const T&,const T*> ConstIterator;
+	typedef _ListIterator<T,T&,T*> Iterator;
+	typedef _ListIterator<T,const T&,const T*> ConstIterator; 
+	typedef ReverseIterator<Iterator> ReverseIterator;
 
 	_List()
 		:_head(new Node())
@@ -127,6 +128,17 @@ public:
 	{
 		return ConstIterator(_head);
 	}
+
+	ReverseIterator RBegin() 
+	{ 
+		return ReverseIterator(End()); 
+	}
+
+	ReverseIterator REnd() 
+	{ 
+		return ReverseIterator(Begin()); 
+	}
+
 	Iterator Insert(Iterator pos,const T&x)   //‘⁄POS«∞≤Â»Îx
 	{
 		LinkType cur = pos._node;
@@ -222,4 +234,20 @@ void testList()
 	cout<<endl;*/
 	PrintList(l);
 }
+void testReverseIterator()
+{
+	_List<int> l;
+	l.PushBack(1);
+	l.PushBack(2);
+	l.PushBack(3);
+	l.PushBack(4);
+	l.PushBack(5);
 
+	_List<int>::ReverseIterator it = l.RBegin();
+	while(it != l.REnd())
+	{
+		cout<<*it<<" ";
+		it++;
+	}
+	cout<<endl;
+}
