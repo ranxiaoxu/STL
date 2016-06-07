@@ -1,6 +1,7 @@
 #pragma once
 #include<iostream>
 #include<assert.h>
+#include"Alloc.h"
 using namespace std;
 
 template<class T>
